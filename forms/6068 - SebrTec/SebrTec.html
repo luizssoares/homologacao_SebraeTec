@@ -1,0 +1,630 @@
+<!--*************************||  Boleto de Táxi - Versão 2 ||*****************************
+Gestor do Processo: CHRISTINI LARISSA GAMA 
+Unidade Gestora: USE
+Gerente da unidade: SÂMIA SEIXAS 
+Diretor da Área:  ADRIANNE
+
+Equipe de Desenvolvimento:
+Main Developer: ROBEMAR MORAIS DUARTE JUNIOR
+Developer Support: PAULO VINÍCIUS BONATES LIRA 
+Project Manager: DANIEL DE AZEVEDO CASAS 
+**************************||  Powered by ATIC - SEBRAE/AM ||*************************-->
+
+
+<html>
+<head>
+	<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css"/>
+	<link type="text/css" rel="stylesheet" href="SEBRAE.css"/>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+	<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+	<link href='/webdesk/customresources?cid=1&resourceName=temaFormulario/0.css' type='text/css' rel='stylesheet' />
+	<script type="text/javascript" src="/webdesk/vcXMLRPC.js"></script>
+	<script type="text/javascript" src="custom.js"></script>
+	<meta charset="utf-8">
+
+	<style type="text/css">
+	.Obrigatorio{
+		color: red;
+	}
+	
+	</style>
+</head>
+<body onload="checkedValidate()">
+<div class="fluig-style-guide">
+<form name="form" role="form">
+
+	<input type="hidden" name="codProjeto" id="codProjeto">
+	<input type="hidden" name="codAcao" id="codAcao">
+	<input type="hidden" name="codRecurso" id="codRecurso">
+	
+<input type="hidden" name="valorTotal_din_ins" id="valorTotal_din_ins">
+<input type="hidden" name="valorTotal_din_con" id="valorTotal_din_con">
+<input type="hidden" name="hd_numSuperior" id="numSuperior">
+<input type="hidden" name="hd_numSuperior_super" id="hd_numSuperior_super">
+<input type="hidden" name="hd_Super" id="hd_Super">
+<input type="hidden" name="hd_Unidade_super" id="hd_Unidade_super">
+<input type="hidden" name="hd_CustoTotalFinal" id="hd_CustoTotalFinal">
+<input type="hidden" name="valor_subarea" id="valor_subarea">
+<input type="hidden" name="hd_nome" id="hd_nome">
+<input type="hidden" name="hd_x" id="hd_x">
+<input type="hidden" name="hd_y" id="hd_y">
+<input type="hidden" name="hd_TotalInstrutoria" id="hd_TotalInstrutoria">
+<input type="hidden" name="hd_TotalConsultoria" id="hd_TotalConsultoria">
+
+
+            <input type="hidden" name="tipoProcesso" id="tipoProcesso" value="SB" readonly /> 
+
+<!---------------------------------------------------------------Abertura Painel com o Cabeçalho-------------------------------------------------------->
+	<div class="panel panel-primary" id="GestaoFornecedor">
+	<div class="panel-heading">
+		<h1>
+			<b>Sebraetec</b>
+		</h1>
+	</div>
+	</div>
+<!----------------------------------------------------------------Fechamento Painel com Cabeçalho------------------------------------------------------->
+
+<!-------------------------------------------------------Abertura Painel com Cabeçalho Dados Solicitante------------------------------------------------>
+	<div class="panel panel-primary" id="DadosSolicitante">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			<b>Dados do Solicitante</b>
+		</h3>
+	</div>
+<!--------------------------------------------------Fechamento Painel com Cabeçalho Dados Solicitante--------------------------------------------------->
+
+<!-------------------------------------------------------Abertura Painel com Dados do Solicitante------------------------------------------------------->
+	<div class="panel-body">
+	<div class="form-group row">
+		<div class="col-md-4">
+			<label for="cmb_NomeSolicita">Nome do Solicitante:</label>
+			<select name="cmb_NomeSolicita" id="cmb_NomeSolicita" dataset="colleague" datasetkey="colleagueId" datasetvalue="colleagueName" 
+			class="form-control" readonly></select>
+		</div>
+		<div class="col-md-4">
+			<label for="dt_DataSolicita">Data e horário:</label>
+			<input type="text" class="form-control" name="dt_DataSolicita" id="dt_DataSolicita" readonly>
+		</div>
+		<div class="col-md-4" id="div_PastaAzul">
+			<label for="txt_GerarNum">Número da Pasta:</label>
+		<div class="input-group">
+			<input type="text" class="form-control" name="txt_GerarNum" id="txt_GerarNum">
+		<div class="input-group-btn">
+			<button type="button" class="btn btn-default addNUm" onclick="GerarN();" id="NumPastaAzul">Gerar Número</button>
+		</div>
+	</div>
+	</div>
+	</div>
+	<div class="form-group row">
+	<div class="col-md-4">
+		<label for="cmb_GerenteSolicitante">Superior para Aprovação:</label>
+		<!--<input type="text" class="form-control" name="cmb_GerenteSolicitante" id="cmb_GerenteSolicitante" readonly>-->
+	
+		<select 
+		name=			"cmb_GerenteSolicitante" 
+		id=				"cmb_GerenteSolicitante" 
+		dataset=		"dsc_Unidades" 
+		datasetkey=		"Matricula" 
+		datasetvalue=	"NomeGerente" 
+		class=			"form-control"
+		>
+	</select>
+	
+	</div>
+	<div class="col-md-4">
+		<label class="zm_UnidadeSolicitante">Unidade Solicitante:</label>
+		<input type="text" class="form-control" name="zm_UnidadeSolicitante" id="zm_UnidadeSolicitante" >
+	</div>
+	<div class="col-md-4" id="Numero_Process_Atual">
+		<label for="txt_NumProcess">Numero do Processo:</label>
+		<input type="text" class="form-control" name="txt_NumProcess" id="txt_NumProcess" readonly>
+	</div>
+	</div>
+	</div>
+	</div>
+
+<!------------------------------------------------------Fechamento Painel Dados do Solicitante--------------------------------------------------------->
+
+
+					
+<!-------------------------------------------------------Abertura Painel com Cabeçalho Dados da Contratação-------------------------------------------->
+	<div class="panel panel-primary" id="DadosContratacao">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			<b>Dados da Contratação</b>
+		</h3>
+	</div>
+<!---------------------------------------------------Fechamento Painel com Cabeçalho Dados da Contratação---------------------------------------------->	
+
+<!-------------------------------------------------------Abertura Painel com Dados da Contratação------------------------------------------------------>
+		
+				<div class="panel-body">
+				<div class="form-group">
+				
+                    <div class="col-md-8 input-default">
+                    <div class="form-group">
+                         <label for="txtFichaTec">Nome da Ficha Técnica:</label> 
+                         <input type="text" class="form-control" name="txtFichaTec" id="txtFichaTec" >
+                    </div>
+                    </div>     
+                       
+					<div class="col-md-12">
+						<div class="form-group">
+							<label for="txtNomeCliente">Nome do Cliente:</label> 
+                            <input type="text" class="form-control" name="txtNomeCliente" id="txtNomeCliente" >
+					
+						</div>
+					</div>
+													
+                             			
+	                <div class="col-md-4">
+	                	<div class="form-group">
+							<label for="txtCodSgtec">Código do SGTEC:</label> 
+                            <input type="text" class="form-control" name="txtCodSgtec" id="txtCodSgtec" >
+
+						</div>
+					</div>
+					
+	
+					
+					<div class="col-md-10">
+						<div class="form-group">
+						
+							<label for="txt_Areas">Área e Subárea da Contratação:</label> 
+                            	<input 	type="zoom"  		id="txt_Areas"  class="form-control"
+									            			name="txt_Areas"
+													        data-zoom="{
+																	        'displayKey':'SubArea',
+																	        'datasetId':'ds_CtSbSubAreas',
+																	        'maximumSelectionLength':'1',
+																	        'placeholder':'Escolha a Área e Subárea',
+																	        'fields':[
+																	            {
+																	               'field':'SubArea',
+																	               'label':'Sub Área'
+																	            },{
+																	              'field':'Area',
+																	              'label':'Área Pretendida',
+																	              'standard':'true'
+																	            }
+																	        ]
+																	     }" >
+					
+						</div>
+					
+					</div>
+					
+					<div class="col-md-12">
+						<div class="form-group">
+							<label for="ta_necessidade">Necessidades:</label>
+						    <textarea name="ta_necessidade" id="ta_necessidade" class="form-control" value=""></textarea>
+					
+						</div>
+					</div>
+								
+					
+					
+					
+			       
+			                              
+			                            
+                 </div>    
+			</div> 
+		
+		</div> 
+
+		<!--*********************************************************************************************************************************-->
+		<div class="panel panel-primary" id="PlanoTrabalho" style="display: none">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<b>Plano de Trabalho / Financeiro</b>
+				</h3>
+			</div>
+			<div class="panel-body">
+
+				<ul class="nav nav-tabs" role="tablist">
+					<li class="active" id="credenciadaRecb"><a href="#credenciadaRecb" role="tab" data-toggle="tab">credenciadaRecb</a></li>
+					<li id="clientePlan"><a href="#clientePlan" role="tab" data-toggle="tab">clientePlan</a></li>
+				</ul>
+				<div class="tab-content">
+				<div class="tab-pane active" id="credenciadaRecb">
+
+					<table class="table"> 
+					<tbody>
+						<tr>
+							<td>
+								<div class="col-md-2">
+								<label for="txt_valorTotalEntregas">Valor Total:</label>
+								<input type="text" class="form-control" name="txt_valorTotalEntregas" id="txt_valorTotalEntregas">
+								</div>
+								<div class="col-md-2">
+									<label for="txt_TotalHrs">Total de Horas Previsto<span class="Obrigatorio"><strong>*</strong></span>:</label>
+									<input type="text" class="form-control" name="txt_TotalHrs" id="txt_TotalHrs">
+								</div>
+							</td>
+						</tr>   
+						<tr>
+							<td>
+								<div class="form-group  table-responsive">
+								<table class="table"> 
+								<tbody>
+									<tr>
+										<td>
+											<button type="button" class="dnmic dados" 
+											id="addEntrega">Inserir Entrega</button>
+										</td>
+									</tr>       
+									<tr>
+										<td>
+											<table id="dados" tablename="dados" class="table table-hover" noaddbutton="true" nodeletebutton="true">
+											<thead>
+											<tr>
+												<td></td>						
+											</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td><span class="fluig-style-guide fs-display-block fs-md-space">
+														<i type="button" class="fluigicon fluigicon-trash fluigicon-md delEntrega dnmic"  id="delEntrega" name="delEntrega" 
+														onclick="Javascript:fnCustomDelete(this);" style="cursor:pointer"></i> 
+													</span>
+													</td>
+													<td>
+													<div class="col-md-3">
+													<div class="form-group">
+														<label for="txt_Atividade">Atividade<span class="Obrigatorio"><strong>*</strong></span>:</label>
+														<input type="text" class="form-control" name="txt_Atividade" id="txt_Atividade">
+													</div>
+													</div>
+													<div class="col-md-3" style="display: none">
+													<div class="form-group">
+														<label for="txt_Metodologia_Ins">Metodologia:</label>
+														<input type="text" class="form-control" name="txt_Metodologia_Ins" id="txt_Metodologia_Ins">
+													</div>
+													</div>
+													<div class="col-md-2">
+													<div class="form-group">
+														<label for="dt_InicioEntrg">Data de Início<span class="Obrigatorio"><strong>*</strong></span>:</label>
+														<input type="date" class="form-control inp Ins" name="dt_InicioEntrg" id="dt_InicioEntrg">
+														<div class="form-group required errored" id="Msg_GuiaErroIni_Ins" name="Msg_GuiaErroIni_Ins" style="display: none">
+														</div>
+													</div>
+													</div>
+													<div class="col-md-2">
+													<div class="form-group">
+														<label for="dt_TerminoEntrg">Data de Término<span class="Obrigatorio"><strong>*</strong></span>:</label>
+														<input type="date" class="form-control" name="dt_TerminoEntrg" id="dt_TerminoEntrg">
+														<div class="form-group required errored" id="Msg_GuiaErroTerm_Ins" name="Msg_GuiaErroTerm_Ins" style="display: none">
+														</div>
+													</div>
+													</div>
+													<div class="col-md-2">
+													<div class="form-group">
+														<label for="dt_vencEntrg">Data de Vencimento<span class="Obrigatorio"><strong>*</strong></span>:</label>
+														<input type="date" class="form-control inp Ins" name="dt_vencEntrg" id="dt_vencEntrg">
+														<div class="form-group required errored" id="Msg_GuiaErroIni_Ins" name="Msg_GuiaErroIni_Ins" style="display: none">
+														</div>
+													</div>
+													</div>
+													<div class="col-md-2">
+													<div class="form-group">
+														<label for="txt_HoraEntrg">Horas<span class="Obrigatorio"><strong>*</strong></span>:</label>
+														<input type="number" class="form-control" name="txt_HoraEntrg" id="txt_HoraEntrg">		
+													</div>
+													</div>															
+													<div class="col-md-3">
+													<div class="form-group">
+														<label for="txt_valor">Valor<span class="Obrigatorio"><strong>*</strong></span>:</label>
+														<div class="input-group">
+														<input type="text" class="form-control inp Ins"name="txt_valor" id="txt_valor">
+														<span class="input-group-addon">$</span>
+													</div>
+													</div>
+													</div>
+													</td>
+												</tr>
+											</tbody>
+											</table>
+										</td>
+									</tr>
+								</tbody>
+								</table>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+					</table>    
+
+				</div>
+
+				<div class="tab-pane" id="clientePlan">
+				<tbody>   
+					<tr>
+						<td>
+							<div class="form-group  table-responsive">
+							<table class="table"> 
+							<tbody>
+								<tr>
+									<td>
+										<button type="button" class="dnmic dados_Cliente"
+										id="addEntrega_Cliente">Inserir Entrega</button>
+									</td>
+								</tr>       
+								<tr>
+									<td>
+										<table id="dados_Cliente" tablename="dados_Cliente" class="table table-hover" noaddbutton="true" nodeletebutton="true">
+										<thead>
+										<tr>
+											<td></td>						
+										</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td><span class="fluig-style-guide fs-display-block fs-md-space">
+													<i type="button" class="fluigicon fluigicon-trash fluigicon-md delEntrega_Cliente dnmic"  id="delEntrega_Cliente" name="delEntrega_Cliente" 
+													onclick="Javascript:fnCustomDelete(this);" style="cursor:pointer"></i> 
+												</span>
+												</td>
+												<td>					
+												<div class="col-md-2">
+												<div class="form-group">
+													<label for="dt_vencEntrg_Cliente">Data de Vencimento<span class="Obrigatorio"><strong>*</strong></span>:</label>
+													<input type="date" class="form-control" name="dt_vencEntrg_Cliente" id="dt_vencEntrg_Cliente">
+													<div class="form-group required errored" id="Msg_GuiaErroIni_Ins" name="Msg_GuiaErroIni_Ins" style="display: none">
+													</div>
+												</div>
+												</div>														
+												<div class="col-md-3">
+												<div class="form-group">
+													<label for="txt_valor_Cliente">Valor<span class="Obrigatorio"><strong>*</strong></span>:</label>
+													<div class="input-group">
+													<input type="text" class="form-control"name="txt_valor_Cliente" id="txt_valor_Cliente">
+													<span class="input-group-addon">$</span>
+												</div>
+												</div>
+												</div>
+												</td>
+											</tr>
+										</tbody>
+										</table>
+									</td>
+								</tr>
+							</tbody>
+							</table>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+				</table>    
+
+				</div>
+
+			</div>	
+			</div>
+			</div>
+			
+			<!--*********************************************************************************************************************************-->
+
+	<!-- Dados de Dotação Orçamentária  -->
+
+			<div class="panel-money" id="painel_dadosrateio">
+				<div class="panel-h">
+					<h3 class="panel-title">
+						<b>Dotação Orçamentária</b>
+					</h3>
+				</div>
+
+
+				<div class="panel-body">
+					<div class="col-md-9">
+						<div class="form-group">
+							<label for="txt_projeto">Projeto<span ><strong>*</strong></span>:</label>
+							<input type="zoom" class="form-control" id="txt_projeto" name="txt_projeto" data-zoom="{
+								'displayKey':'NOME',
+								'datasetId':'dsprojeto',
+								'maximumSelectionLength':'1',
+								'placeholder':'Escolha o projeto',
+								'fields':[
+								{
+									'field':'CODCCUSTO',
+									'label':'CODIGO'
+								},{
+										'field':'NOME',
+										'label':'NOME',
+										'standard':'true'
+								}
+								]
+								}">
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="txt_saldo">Saldo:</label>
+							<input class="form-control mm" type="text" name="txt_saldo" id="txt_saldo" readonly>
+						</div>
+					</div>
+					<br>
+					<div class="col-md-9">
+						<div class="form-group">
+							<label for="txt_acao">Ação<span ><strong>*</strong></span>:</label>
+							<input type="zoom" class="form-control" id="txt_acao" name="txt_acao" data-zoom="{
+			'displayKey':'NOME',
+			'datasetId':'dsacao',
+			'maximumSelectionLength':'1',
+			'placeholder':'Escolha a ação',
+			'fields':[
+			{
+				'field':'CODCCUSTO',
+				'label':'CODIGO',
+				'search':'true'
+				
+			},{
+					'field':'NOME',
+					'label':'NOME',
+					'search':'true',
+					'standard':'true'
+			}
+			]
+			}" onblur="verifc()">
+						</div>
+					</div>
+					<br>
+					<div class="col-md-9">
+						<div class="form-group">
+							<label for="txt_recursos">Unidade<span
+									><strong>*</strong></span>:</label>
+							<input type="zoom" class="form-control" id="txt_recursos" name="txt_recursos" data-zoom="{
+								'displayKey':'NOME',
+								'datasetId':'dsunidade',
+								'maximumSelectionLength':'1',
+								'placeholder':'Escolha a unidade',
+								'fields':[
+								{
+									'field':'CODCCUSTO',
+									'label':'CODIGO'
+								},{
+										'field':'NOME',
+										'label':'NOME',
+										'standard':'true'
+								}
+								]
+								}">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+			<!-- Final - Dados de Dotação Orçamentária  -->
+<!--------------------------------------------------Fechamento Painel Dotação Orçamentária----------------------------------------------->			
+
+
+<!------------------------------------------------Abertura Painel com Cabeçalho Custo da Contratação-------------------------------------------->
+	<div class="panel panel-primary" id="CustoTotalContracao">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			<b>Custo Total do Contrato</b>
+		</h3>
+	</div>
+<!----------------------------------------------Fechamento Painel com Cabeçalho Custo da Contratação----------------------------------------->
+<!----------------------------------------------Abertura Painel com Dados Custo da Contratação----------------------------------------------->
+	<div class="panel-body">
+	<div class="col-md-6">
+	<div class="panel-body">
+	<div class="col-md-12">
+
+
+
+			<label for="txt_Custo">Custo da Solução:</label>
+			<div class="input-group">
+				<input type="text" class="form-control" name="txt_Custo" id="txt_Custo" onchange="formatarMoeda(this);PorcentContra()">
+			<span class="input-group-addon">$</span>
+
+
+	</div>
+	</div>
+
+	<div class="col-md-12">
+	<br>	
+	<div class="panel panel-primary" id="DadosConvenio">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			<b>Dados de Convênio</b>
+		</h3>
+	</div>
+	<div class="panel-body">
+	<div class="col-md-12">
+	<div class="form-group">
+		<label for="txt_NumeroConvenio">Número do Convênio:</label>
+		<input type="text" class="form-control" name="txt_NumeroConvenio" id="txt_NumeroConvenio" onkeyup="formatarConvenio(this)">
+	</div>
+	</div>
+	<div class="col-md-12">
+	<div class="form-group">
+		<label for="txt_EntidadeInstituicao">Entidade/Instituição Conveniada:</label>
+		<input type="text" class="form-control" name="txt_EntidadeInstituicao" id="txt_EntidadeInstituicao">
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	<div class="col-md-6">
+	<div class="panel panel-primary" id="ReceitaPrevista">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			<b>Dados da Receita Prevista a Receber</b>
+		</h3>
+	</div>
+	<div class="panel-body">
+	<div class="col-md-6">
+	<div class="form-group">
+		<label for="txt_Contrapartida">Valor da Contrapartida<span class="Obrigatorio"><strong>*</strong></span>:</label>
+		<div class="input-group">
+		<input type="text" class="form-control" name="txt_Contrapartida" id="txt_Contrapartida" onchange="formatarMoeda(this);">
+		<span class="input-group-addon">$</span>
+	</div>
+	</div>
+	</div><div class="col-md-6 h4">30% do valor do Custo da Solução</div>
+	<div class="col-md-12">
+	<div class="form-group">
+		<label for="txt_Pagamento">Forma de Pagamento<span class="Obrigatorio"><strong>*</strong></span>:</label>
+		<select  class="form-control" name="txt_Pagamento" id="txt_Pagamento" onclick="validaContra()">
+			<option value="Selecione">Selecione</option>
+			<option value="Especie">Espécie</option>
+			<option value="BoletoBancario">Boleto Bancário</option>
+			<option value="TransferenciaBancaria">Transferência Bancária</option>
+			<option value="DepositoBancario">Depósito Bancário</option>
+			<option value="CartaoCredido">Cartão de Crédito</option>
+			<option value="CartaoDebito">Cartão de Débito</option>
+			<option value="CartaoBNDES">Cartão BNDES</option>
+		</select>
+	</div>
+	</div>
+	<div class="col-md-12">
+	<div class="form-group">
+		<label for="txt_Parcelas">Número de Parcelas<span class="Obrigatorio"><strong>*</strong></span>:</label>
+		<input type="text" class="form-control" name="txt_Parcelas" id="txt_Parcelas">
+	</div>
+	</div>
+	<div class="col-md-12">
+	<div class="custom-radio custom-radio-primary">
+		<input type="radio" name="radiotypes" value="sim" id="radio-1" onclick="enableContrapartida(this)">
+		<label for="radio-1">Sim, o contrato recebe receita de contra partida.</label>
+	</div>
+	<div class="custom-radio custom-radio-danger">
+		<input type="radio" name="radiotypes" value="Nao" id="radio-2" onclick="enableContrapartida(this)">
+		<label for="radio-2" id="checkboxUnic"></label>
+	</div><!--
+	<div class="custom-checkbox custom-checkbox-primary custom-checkbox-sm">
+		<input type="checkbox" name="checkbox8" id="checkbox8" onclick="enableContrapartida()">
+		<label for="checkbox8" id="checkboxUnic"></label>
+	</div>-->
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>	
+	</div>
+<!---------------------------------------------------Fechamento Painel com Dados Custo da Contratação------------------------------------------->
+		
+	<div class="panel panel-default" id="panel_rodape">
+	<div class="panel-heading ">
+	<h4 class="panel-title">Desenvolvido por ATIC SEBRAE/AM</h4>
+	</div> 
+	</div>		
+
+	<script type="text/javascript">
+	
+	var nome = document.getElementById("_cmb_NomeSolicita").textContent
+	var part = "Eu, <h9 style=\"color:red;\"><b>" + nome + "</b></h9>, declaro e confirmo que para este contrato não há previsão de RECEITA conforme regra de negócios do SEBRAE"
+	document.getElementById("checkboxUnic").innerHTML = part
+	
+	</script>
+
+</form>
+</div>
+</body>
+</html>
